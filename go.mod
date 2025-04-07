@@ -1,6 +1,6 @@
 module github.com/matt-e/seed
 
-go 1.24
+go 1.24.1
 
 tool (
 	github.com/abice/go-enum
