@@ -1,4 +1,4 @@
-//go:generate go-enum --marshal --noprefix --nocase --names
+//go:generate go tool go-enum --marshal --noprefix --nocase --names
 package stage
 
 import (

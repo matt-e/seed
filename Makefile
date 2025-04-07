@@ -3,7 +3,7 @@ export PATH := $(shell go env GOPATH)/bin:${PATH}
 .DEFAULT_GOAL := all
 .PHONY: all
 all: ## build pipeline
-all: mod inst gen build spell lint test
+all: mod gen build spell lint test
 
 .PHONY: precommit
 precommit: ## validate the branch before commit
@@ -30,12 +30,6 @@ mod: ## go mod tidy
 	$(call print-target)
 	echo ${PATH}
 	go mod tidy
-	cd tools && go mod tidy
-
-.PHONY: inst
-inst: ## go install tools
-	$(call print-target)
-	cd tools && go install $(shell cd tools && go list -e -f '{{ join .Imports " " }}' -tags=tools)
 
 .PHONY: gen
 gen: ## go generate
@@ -45,22 +39,22 @@ gen: ## go generate
 .PHONY: build
 build: ## goreleaser build
 	$(call print-target)
-	goreleaser build --clean --single-target --snapshot
+	go tool goreleaser build --clean --single-target --snapshot
 
 .PHONY: spell
 spell: ## misspell
 	$(call print-target)
-	misspell -error -locale=US -w **.md
+	go tool misspell -error -locale=US -w **.md
 
 .PHONY: lint
 lint: ## golangci-lint
 	$(call print-target)
-	golangci-lint run --fix
+	go tool golangci-lint run --fix
 
 .PHONY: vuln
 vuln: ## govulncheck
 	$(call print-target)
-	govulncheck ./...
+	go tool govulncheck ./...
 
 .PHONY: test
 test: ## go test
@@ -73,7 +67,6 @@ diff: ## git diff
 	$(call print-target)
 	git diff --exit-code
 	RES=$$(git status --porcelain) ; if [ -n "$$RES" ]; then echo $$RES && exit 1 ; fi
-
 
 define print-target
     @printf "Executing target: \033[36m$@\033[0m\n"
