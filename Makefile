@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-
+export PATH := $(shell go env GOPATH)/bin:${PATH}
 .DEFAULT_GOAL := all
 .PHONY: all
 all: ## build pipeline
@@ -28,6 +28,7 @@ clean: ## remove files created during build pipeline
 .PHONY: mod
 mod: ## go mod tidy
 	$(call print-target)
+	echo ${PATH}
 	go mod tidy
 	cd tools && go mod tidy
 

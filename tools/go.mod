@@ -1,8 +1,9 @@
-module github.com/golang-templates/seed/build
+module github.com/matt-e/seed/tools
 
 go 1.23.0
 
 require (
+	github.com/abice/go-enum v0.6.0
 	github.com/client9/misspell v0.3.4
 	github.com/golangci/golangci-lint v1.61.0
 	github.com/goreleaser/goreleaser/v2 v2.3.2

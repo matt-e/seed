@@ -1,12 +1,7 @@
-// Application which greets you.
 package main
 
-import "fmt"
+import "github.com/matt-e/seed/cmd"
 
 func main() {
-	fmt.Println(greet())
-}
-
-func greet() string {
-	return "Hi!"
+	cmd.Execute()
 }
