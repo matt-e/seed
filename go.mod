@@ -11,7 +11,7 @@ tool (
 )
 
 require (
-	github.com/lmittmann/tint v1.0.5
+	github.com/lmittmann/tint v1.0.7
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.19.0
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.57.0
