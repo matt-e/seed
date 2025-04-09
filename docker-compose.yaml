@@ -7,11 +7,13 @@ services:
     ports:
       - "4317:4317" # OTLP gRPC receiver
   jaeger:
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/jaeger:latest
     ports:
-      - "6831:6831/udp" # UDP port for Jaeger agent
-      - "16686:16686" # Web UI
-      - "14268:14268" # HTTP port for spans
+      - "4319:4317" # Note the mapping - allows the otel collector to send traces to jaeger
+      - "4318:4318"
+      - "5778:5778"
+      - "9411:9411"
+      - "16686:16686"
   prometheus:
     image: prom/prometheus:latest
     volumes:

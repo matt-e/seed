@@ -68,6 +68,17 @@ diff: ## git diff
 	git diff --exit-code
 	RES=$$(git status --porcelain) ; if [ -n "$$RES" ]; then echo $$RES && exit 1 ; fi
 
+config/local/grafana:
+	mkdir -p config/local/grafana
+
+.PHONY: start-otel-collector
+start-otel-collector: config/local/grafana config/local/prometheus.yml config/local/otel-collector-config.yaml
+	UID="$(id -u)" GID="$(id -g)" docker compose up
+
+.PHONY: stop-otel-collector
+stop-otel-collector:
+	docker compose down
+
 define print-target
     @printf "Executing target: \033[36m$@\033[0m\n"
 endef

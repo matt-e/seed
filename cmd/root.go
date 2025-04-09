@@ -10,10 +10,15 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/fx"
 
-	"github.com/matt-e/seed/pkg/config"
+	"github.com/matt-e/otelfx"
+
 	"github.com/matt-e/seed/pkg/log"
-	"github.com/matt-e/seed/pkg/otel"
 	"github.com/matt-e/seed/pkg/stage"
+)
+
+const (
+	OtelDevEndpoint   = otelfx.CollectorEndpoint("127.0.0.1:4317")
+	OtelDevIsInsecure = otelfx.CollectorIsInsecure(true)
 )
 
 func cobraFxAdapter(opts ...fx.Option) error {
@@ -22,12 +27,24 @@ func cobraFxAdapter(opts ...fx.Option) error {
 	args := []fx.Option{
 		log.Module,
 		stage.Module,
-		config.Module,
-		otel.Module,
-		// otel.StdoutModule,
-		otel.CollectorModule,
+		otelfx.Module,
 		fx.Provide(func() context.Context { return ctx }),
 	}
+
+	switch stage.MustGet() {
+	case stage.Test:
+		args = append(args, otelfx.StdoutModule)
+	case stage.Dev:
+		args = append(args,
+			fx.Supply(OtelDevEndpoint, OtelDevIsInsecure),
+			otelfx.CollectorModule,
+		)
+	default:
+		args = append(args,
+			otelfx.CollectorModule,
+		)
+	}
+
 	args = append(args, opts...)
 	app := fx.New(args...)
 	app.Run()
