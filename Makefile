@@ -73,7 +73,7 @@ config/local/grafana:
 
 .PHONY: start-otel-collector
 start-otel-collector: config/local/grafana config/local/prometheus.yml config/local/otel-collector-config.yaml
-	UID="$(id -u)" GID="$(id -g)" docker compose up
+	USERID=$(shell id -u) GROUPID=$(shell id -g) docker compose up
 
 .PHONY: stop-otel-collector
 stop-otel-collector:
