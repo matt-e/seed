@@ -7,7 +7,7 @@ tool (
 	github.com/client9/misspell/cmd/misspell
 	github.com/golangci/golangci-lint/cmd/golangci-lint
 	github.com/goreleaser/goreleaser/v2
-	golang.org/x/vuln
+	golang.org/x/vuln/cmd/govulncheck
 )
 
 require (
@@ -482,6 +482,7 @@ require (
 	golang.org/x/oauth2 v0.30.0 // indirect
 	golang.org/x/sync v0.15.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
+	golang.org/x/telemetry v0.0.0-20240522233618-39ace7a40ae7 // indirect
 	golang.org/x/term v0.32.0 // indirect
 	golang.org/x/text v0.26.0 // indirect
 	golang.org/x/time v0.10.0 // indirect
